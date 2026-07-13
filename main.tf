@@ -22,7 +22,7 @@ resource "aws_subnet" "public_subnet_1" {
   cidr_block = var.public_subnet_1_cidr
 
   availability_zone = var.az1
-  
+
 
   map_public_ip_on_launch = true
 
@@ -199,4 +199,36 @@ resource "aws_instance" "web2" {
     Name = "Web-Server-2"
   }
 
+}
+resource "aws_instance" "web" {
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = var.instance_type
+  subnet_id = aws_subnet.public_subnet_1.id
+  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  key_name               = "terraform-key"
+
+  user_data = <<-EOF
+              #!/bin/bash
+              yum update -y
+              yum install -y httpd
+              systemctl enable httpd
+              systemctl start httpd
+
+              cat > /var/www/html/index.html <<HTML
+              <!DOCTYPE html>
+              <html>
+              <head>
+                <title>Terraform Demo</title>
+              </head>
+              <body>
+                <h1>Welcome to Terraform on AWS!</h1>
+                <p>EC2, VPC, Subnet, Route Table, and Security Group were created using Terraform.</p>
+              </body>
+              </html>
+              HTML
+              EOF
+
+  tags = {
+    Name = "Terraform-Web-Server"
+  }
 }
