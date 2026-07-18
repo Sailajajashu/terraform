@@ -20,5 +20,5 @@ instance_type = "t2.micro"
 
 
 key_name = "terraform-key"
-
-bucket_name = "sailaja-terraform-demo-2026-001"
+###
+bucket_name = "sailaja-terraform-demo-2026-00123"
