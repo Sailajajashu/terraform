@@ -203,7 +203,7 @@ resource "aws_instance" "web2" {
 resource "aws_instance" "web" {
   ami                    = data.aws_ami.amazon_linux.id
   instance_type          = var.instance_type
-  subnet_id = aws_subnet.public_subnet_1.id
+  subnet_id              = aws_subnet.public_subnet_1.id
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   key_name               = "terraform-key"
 
@@ -230,5 +230,17 @@ resource "aws_instance" "web" {
 
   tags = {
     Name = "Terraform-Web-Server"
+  }
+}
+
+# -----------------------------
+# S3 Bucket
+# -----------------------------
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = var.bucket_name
+
+  tags = {
+    Name        = "Terraform-S3-Bucket"
+    Environment = "Dev"
   }
 }

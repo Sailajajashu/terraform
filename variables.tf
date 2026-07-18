@@ -56,3 +56,8 @@ variable "key_name" {
   description = "AWS EC2 Key Pair"
   type        = string
 }
+
+variable "bucket_name" {
+  description = "Unique S3 bucket name"
+  type        = string
+}
