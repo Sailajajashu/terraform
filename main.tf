@@ -182,7 +182,7 @@ resource "aws_instance" "web1" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "Web-Server-1"
+    Name = "Web-Server-10"
   }
 
 }
